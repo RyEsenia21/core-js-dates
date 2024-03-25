@@ -114,8 +114,11 @@ function getCountDaysInMonth(month, year) {
  * '2024-02-01T00:00:00.000Z', '2024-02-02T00:00:00.000Z'  => 2
  * '2024-02-01T00:00:00.000Z', '2024-02-12T00:00:00.000Z'  => 12
  */
-function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
-  throw new Error('Not implemented');
+function getCountDaysOnPeriod(dateStart, dateEnd) {
+  const start = new Date(dateStart);
+  const end = new Date(dateEnd);
+  const total = (end - start) / (1000 * 60 * 60 * 24) + 1;
+  return total;
 }
 
 /**
@@ -135,8 +138,11 @@ function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
  * '2024-02-02', { start: '2024-02-02', end: '2024-03-02' } => true
  * '2024-02-10', { start: '2024-02-02', end: '2024-03-02' } => true
  */
-function isDateInPeriod(/* date, period */) {
-  throw new Error('Not implemented');
+function isDateInPeriod(date, period) {
+  const d = new Date(date);
+  const start = new Date(period.start);
+  const end = new Date(period.end);
+  return d >= start && d <= end;
 }
 
 /**
@@ -152,6 +158,21 @@ function isDateInPeriod(/* date, period */) {
  */
 function formatDate(/* date */) {
   throw new Error('Not implemented');
+  // const d = new Date(date);
+  // const month = d.getMonth() + 1;
+  // const day = d.getDate();
+  // const year = d.getFullYear();
+  // let hour = d.getHours();
+  // let minutes = d.getMinutes();
+  // let sec = d.getSeconds();
+  // minutes = minutes < 10 ? `0${minutes}` : minutes;
+  // sec = sec < 10 ? `0${sec}` : sec;
+  // let period = 'AM';
+  // if (hour >= 12) {
+  //   period = 'PM';
+  //   hour = hour % 12 || 12;
+  // }
+  // return `${month}/${day}/${year}, ${hour}:${minutes}:${sec}${period}`;
 }
 
 /**
