@@ -35,9 +35,9 @@ function getTime(date) {
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
-  const timeString = `${hours}:${minutes}:${seconds}`;
+  const time = `${hours}:${minutes}:${seconds}`;
 
-  return timeString;
+  return time;
 }
 
 /**
@@ -51,8 +51,19 @@ function getTime(date) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const dayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  const day = new Date(date);
+  const dayName = day.getDay();
+  return dayNames[dayName];
 }
 
 /**
@@ -66,8 +77,15 @@ function getDayName(/* date */) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const d = new Date(date);
+  const dayOfWeek = d.getDay();
+  let daysUntilFriday = 5 - dayOfWeek;
+  if (daysUntilFriday <= 0) {
+    daysUntilFriday += 7;
+  }
+  d.setDate(d.getDate() + daysUntilFriday);
+  return d;
 }
 
 /**
@@ -81,8 +99,8 @@ function getNextFriday(/* date */) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  return new Date(year, month, 0).getDate();
 }
 
 /**
