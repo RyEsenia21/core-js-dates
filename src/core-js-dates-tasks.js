@@ -156,23 +156,23 @@ function isDateInPeriod(date, period) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
-  // const d = new Date(date);
-  // const month = d.getMonth() + 1;
-  // const day = d.getDate();
-  // const year = d.getFullYear();
-  // let hour = d.getHours();
-  // let minutes = d.getMinutes();
-  // let sec = d.getSeconds();
-  // minutes = minutes < 10 ? `0${minutes}` : minutes;
-  // sec = sec < 10 ? `0${sec}` : sec;
-  // let period = 'AM';
-  // if (hour >= 12) {
-  //   period = 'PM';
-  //   hour = hour % 12 || 12;
-  // }
-  // return `${month}/${day}/${year}, ${hour}:${minutes}:${sec}${period}`;
+function formatDate(date) {
+  const opt = {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+    timeZone: 'UTC',
+    timeZoneName: 'short',
+  };
+
+  const res = new Intl.DateTimeFormat('en-US', opt).format(new Date(date));
+  const arrRes = res.split(' ');
+  arrRes.pop();
+  return arrRes.join(' ');
 }
 
 /**
@@ -187,8 +187,18 @@ function formatDate(/* date */) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountWeekendsInMonth(month, year) {
+  const daysInMonth = new Date(year, month, 0).getDate();
+  let countWeekends = 0;
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const currentDay = new Date(year, month - 1, day);
+    const dayOfWeek = currentDay.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      countWeekends += 1;
+    }
+  }
+
+  return countWeekends;
 }
 
 /**
